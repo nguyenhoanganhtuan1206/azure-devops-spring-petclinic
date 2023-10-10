@@ -45,8 +45,10 @@ stages:
   jobs:
     - deployment: VMDeploy
       displayName: Deploy to VM
-      pool:
-        vmImage: $(vmImageName)
+      environment:
+        name: spring-petclinic-env-vm
+        resourceName: DESKTOP-BUGKGO7
+        resourceType: virtualMachine
       strategy:
         runOnce:
           deploy:
