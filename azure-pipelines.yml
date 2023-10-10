@@ -19,6 +19,8 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
+  azureSubscription: 'Azure subscription 1(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
+
 stages:
 - stage: Build
   displayName: Build and push stage
@@ -44,11 +46,15 @@ stages:
     - deployment: VMDeploy
       displayName: Deploy to VM
       environment:
-        name: spring-petclinic-env-vm
+        name: ContosoDeploy
         resourceName: DESKTOP-BUGKO7
         resourceType: virtualMachine
       strategy:
         runOnce:
           deploy:
             steps:
-              - script: echo "Deploying... to VM"
+              - task: AzureWebAppContainer@1
+                displayName: Deploy to Azure Web App for Containers
+                inputs:
+                  azureSubscription: $(azureSubscription)
+                  appName: 'spring-petclinic'
