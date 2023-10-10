@@ -17,7 +17,7 @@ variables:
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+  vmImageName: 'windows-latest'
 
   azureSubscription: 'Azure subscription 1(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
 
@@ -46,7 +46,7 @@ stages:
     - deployment: VMDeploy
       displayName: Deploy to VM
       environment:
-        name: spring-petclinic-env-vm
+        name: spring-petclinic-env-vm-windows
         resourceName: DESKTOP-BUGKGO7
         resourceType: virtualMachine
       strategy:
