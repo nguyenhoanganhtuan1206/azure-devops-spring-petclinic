@@ -63,4 +63,4 @@ stages:
                 inputs:
                   azureSubscription: $(azureSubscription)
                   appName: 'spring-petclinic'
-                  containers: '$(imageRepository):56'
+                  containers: '$(imageRepository):68'
