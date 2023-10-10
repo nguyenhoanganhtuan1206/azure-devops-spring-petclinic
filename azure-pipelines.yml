@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: '4d662b40-2626-4ab9-bee0-8f2a3e6dac17'
   imageRepository: 'springpetclinic'
   containerRegistry: 'gsspringbootcr.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/.devcontainer/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
