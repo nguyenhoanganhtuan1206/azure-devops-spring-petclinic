@@ -1,0 +1,31 @@
+services:
+  petclinic:
+    build:
+      context: .
+    container_name: springboot-server
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/app
+    environment:
+      - MYSQL_URL=jdbc:mysql://mysqlserver/petclinic
+    depends_on:
+      - mysqlserver
+  mysqlserver:
+    image: mysql:8.0
+    container_name: mysqlserver
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql_data
+      - mysql_config:/etc/mysql/conf.d
+    environment:
+      - MYSQL_DATABASE=petclinic
+      - MYSQL_USER=petclinic
+      - MYSQL_PASSWORD=petclinic
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_ROOT_PASSWORD=
+
+volumes:
+  mysql_data:
+  mysql_config:
