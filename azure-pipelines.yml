@@ -60,12 +60,8 @@ stages:
                   command: login
                   containerRegistry: $(registryName)
               - script: |
-                  docker login -u $(DOCKER_REGISTRY_NAME) -p $(DOCKER_REGISTRY_PASSWORD) $(DOCKER_REGISTRY_SERVER)
+                  docker login -u gsSpringBootCR-p 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
                   docker pull gsspringbootcr.azurecr.io/springpetclinic:80
-                  env:
-                    DOCKER_REGISTRY_SERVER: gsspringbootcr.azurecr.io
-                    DOCKER_REGISTRY_USERNAME: gsSpringBootCR 
-                    DOCKER_REGISTRY_PASSWORD: 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ
               - task: Bash@3
                 inputs:
                   targetType: inline
