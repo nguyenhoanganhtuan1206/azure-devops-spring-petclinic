@@ -37,3 +37,18 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
+- stage: Deploy
+  displayName: Stage to deploy
+  jobs:
+    - deployment: VMDeploy
+      displayName: Deploy to VM
+      environment:
+        name: spring-petclinic-env-vm
+        resourceName: DESKTOP-BUGKO7
+        resourceType: virtualMachine
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - script: echo "Deploying... to VM"
