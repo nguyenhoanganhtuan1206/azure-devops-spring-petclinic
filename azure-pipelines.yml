@@ -47,7 +47,7 @@ stages:
       displayName: Deploy to VM
       environment:
         name: ContosoDeploy
-        resourceName: DESKTOP-BUGKO7
+        resourceName: DESKTOP-BUGKGO7
         resourceType: virtualMachine
       strategy:
         runOnce:
