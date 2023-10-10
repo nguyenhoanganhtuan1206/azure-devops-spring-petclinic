@@ -15,6 +15,7 @@ variables:
   containerRegistry: 'gsspringbootcr.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
+  registryName: 'gsSpringBootCR'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -57,7 +58,7 @@ stages:
               - task: Docker@2
                 inputs:
                   command: login
-                  containerRegistry: $(dockerRegistryServiceConnection)
+                  containerRegistry: $(registryName)
               - task: Bash@3
                 inputs:
                   targetType: inline
