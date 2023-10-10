@@ -72,4 +72,4 @@ stages:
                 inputs:
                   azureSubscription: $(azureSubscription)
                   appName: 'spring-petclinic'
-                  containers: '$(imageRepository):$(tag)'
+                  containers: '$(imageRepository):80'
