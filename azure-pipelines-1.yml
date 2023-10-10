@@ -46,7 +46,7 @@ stages:
     - deployment: VMDeploy
       displayName: Deploy to VM
       environment:
-        name: spring-petclinic-env-vm-windows
+        name: ContosoDeploy
         resourceName: DESKTOP-BUGKGO7
         resourceType: virtualMachine
       strategy:
