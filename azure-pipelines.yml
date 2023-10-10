@@ -21,28 +21,24 @@ variables:
 
   azureSubscription: 'Azure subscription 1(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
 
-  # Docker information
-  dockerUsername: gsSpringBootCR
-  dockerPassword: 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ 
-
 stages:
-# - stage: Build
-#   displayName: Build and push stage
-#   jobs:
-#   - job: Build
-#     displayName: Build
-#     pool:
-#       vmImage: $(vmImageName)
-#     steps:
-#     - task: Docker@2
-#       displayName: Build and push an image to container registry
-#       inputs:
-#         command: buildAndPush
-#         repository: $(imageRepository)
-#         dockerfile: $(dockerfilePath)
-#         containerRegistry: $(dockerRegistryServiceConnection)
-#         tags: |
-#           $(tag)
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
 
 - stage: Deploy
   displayName: Stage to deploy
@@ -63,4 +59,4 @@ stages:
                 inputs:
                   azureSubscription: $(azureSubscription)
                   appName: 'spring-petclinic'
-                  containers: '$(imageRepository):68'
+                  containers: '$(imageRepository):$(tag)'
