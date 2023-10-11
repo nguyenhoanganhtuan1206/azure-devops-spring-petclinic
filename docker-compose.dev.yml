@@ -2,6 +2,7 @@ services:
   petclinic:
     build:
       context: .
+      target: development
     container_name: springboot-server
     ports:
       - "8080:8080"

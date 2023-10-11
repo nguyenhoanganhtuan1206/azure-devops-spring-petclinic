@@ -1,6 +1,3 @@
-trigger:
-- main
-
 resources:
 - repo: self
 
@@ -16,13 +13,14 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
-  webAppName: spring-petclinic-window-os
+  webAppName: spring-petclinic
 
   azureSubscription: 'Azure subscription 1(4)(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
 
   # Docker information
   dockerUsername: gsSpringBootCR
   dockerPassword: 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
+  dockerContainerName: spring-petclinic-app
 
 stages:
 - stage: Build
@@ -63,12 +61,12 @@ stages:
                   script: |           
                     docker login -u $(dockerUsername) -p $(dockerPassword)
                     # Check if container exists
-                    if docker ps -a | grep spring-petclinic-app; then
+                    if docker ps -a | grep $(dockerContainerName); then
                       # Remove the container
-                      docker rm -f spring-petclinic-app
+                      docker rm -f $(dockerContainerName)
                     fi
                     docker pull $(containerRegistry)/springpetclinic:100
-                    docker run -d --name spring-petclinic-app $(containerRegistry)/springpetclinic:$(tag)
+                    docker run -d --name $(dockerContainerName) $(containerRegistry)/springpetclinic:$(tag)
               - task: Docker@2
                 inputs:
                   command: login
@@ -78,10 +76,10 @@ stages:
                 inputs:
                   command: start
                   containerRegistry: $(registryName)
-                  container: spring-petclinic-app
+                  container: $(dockerContainerName)
               - task: AzureWebAppContainer@1
                 displayName: Deploy to Azure Web App for Containers
                 inputs:
                   azureSubscription: $(azureSubscription)
-                  appName: 'spring-petclinic'
+                  appName: '$(webAppName)'
                   containers: '$(imageRepository):$(tag)'
