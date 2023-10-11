@@ -23,13 +23,13 @@ variables:
   dockerContainerName: spring-petclinic-app
 
 jobs:
-  - job: 
-    steps:
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'drop'
-          publishLocation: 'Container'
+- job: 
+  steps:
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'    
        
             
 # - stage: Build
