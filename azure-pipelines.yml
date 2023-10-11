@@ -65,7 +65,7 @@ stages:
                       # Remove the container
                       docker rm -f spring-petclinic-app
                     fi
-                    docker pull $(containerRegistry)/springpetclinic:$(tag)
+                    docker pull $(containerRegistry)/springpetclinic:100
               - task: Docker@2
                 inputs:
                   command: login
