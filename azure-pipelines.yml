@@ -57,7 +57,7 @@ stages:
             steps:
               - script: |
                   docker login -u gsSpringBootCR-p 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
-                  docker pull gsspringbootcr.azurecr.io/springpetclinic:80
+                  docker pull gsspringbootcr.azurecr.io/springpetclinic:$(tag)
               - task: Docker@2
                 inputs:
                   command: login
@@ -69,8 +69,8 @@ stages:
                 inputs:
                   targetType: inline
                   script: |
-                      docker pull $(containerRegistry)/$(imageRepository):80
-                      docker run -d --name spring-petclinic-app $(containerRegistry)/$(imageRepository):80
+                      docker pull $(containerRegistry)/$(imageRepository):$(tag)
+                      docker run -d --name spring-petclinic-app $(containerRegistry)/$(imageRepository):$(tag)
               - task: Docker@2
                 displayName: Start docker container
                 inputs:
@@ -82,4 +82,4 @@ stages:
                 inputs:
                   azureSubscription: $(azureSubscription)
                   appName: 'spring-petclinic'
-                  containers: '$(imageRepository):80'
+                  containers: '$(imageRepository):$(tag)'
