@@ -67,10 +67,7 @@ stages:
                   targetType: inline
                   script: |
                       docker pull $(containerRegistry)/$(imageRepository):80
-              - task: Docker@2
-                inputs:
-                  command: start
-                  containerRegistry: $(registryName)
+                      docker run -dp 80:80 $(containerRegistry)/$(imageRepository):80
               - task: AzureWebAppContainer@1
                 displayName: Deploy to Azure Web App for Containers
                 inputs:
