@@ -62,15 +62,18 @@ stages:
                 inputs:
                   command: login
                   containerRegistry: $(registryName)
-              # - script: |
-              #     docker build -t petclinic-app .
-              #     docker start petclinic-app 
               - task: Bash@3
                 inputs:
                   targetType: inline
                   script: |
                       docker pull $(containerRegistry)/$(imageRepository):$(tag)
                       docker run -d --name spring-petclinic-app $(containerRegistry)/$(imageRepository):$(tag)
+              - task: Docker@2
+                displayName: Build docker from CR
+                inputs:
+                  command: build
+                  containerRegistry: $(registryName)
+                  Dockerfile: '**/Dockerfile'
               - task: Docker@2
                 displayName: Start docker container
                 inputs:
