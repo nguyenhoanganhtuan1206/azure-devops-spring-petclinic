@@ -55,18 +55,22 @@ stages:
         runOnce:
           deploy:
             steps:
+              - script: |
+                  docker login -u gsSpringBootCR-p 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
+                  docker pull gsspringbootcr.azurecr.io/springpetclinic:80
               - task: Docker@2
                 inputs:
                   command: login
                   containerRegistry: $(registryName)
-              - script: |
-                  docker login -u gsSpringBootCR-p 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
-                  docker pull gsspringbootcr.azurecr.io/springpetclinic:80
               - task: Bash@3
                 inputs:
                   targetType: inline
                   script: |
-                    docker pull $(containerRegistry)/$(imageRepository):80
+                      docker pull $(containerRegistry)/$(imageRepository):80
+              - task: Docker@2
+                inputs:
+                  command: start
+                  containerRegistry: $(registryName)
               - task: AzureWebAppContainer@1
                 displayName: Deploy to Azure Web App for Containers
                 inputs:
