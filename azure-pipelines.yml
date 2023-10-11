@@ -22,14 +22,16 @@ variables:
   dockerPassword: 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
   dockerContainerName: spring-petclinic-app
 
-jobs:
-- job: 
-  steps:
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'    
+stages:
+  - stage: Publish build artifact
+    jobs:
+    - job: 
+      steps:
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'    
        
             
 # - stage: Build
