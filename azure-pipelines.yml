@@ -55,22 +55,25 @@ stages:
         runOnce:
           deploy:
             steps:
-              - script: |
-                  docker login -u gsSpringBootCR-p 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
-                  docker pull gsspringbootcr.azurecr.io/springpetclinic:91
+              - task: Bash@3
+                inputs:
+                  targetType: inline
+                  script: |           
+                    docker login -u gsSpringBootCR-p 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
+                    docker pull gsspringbootcr.azurecr.io/springpetclinic:91
               - task: Docker@2
                 inputs:
                   command: login
                   containerRegistry: $(registryName)
-              - task: Bash@3
-                inputs:
-                  targetType: inline
-                  script: |
-                      docker pull $(containerRegistry)/$(imageRepository):91
-                      if docker ps -a | grep spring-petclinic-app; then 
-                      # Remove the container
-                      docker rm -f spring-petclinic-app
-                      docker run -d --name spring-petclinic-app $(containerRegistry)/$(imageRepository):91
+              # - task: Bash@3
+              #   inputs:
+              #     targetType: inline
+              #     script: |
+              #         docker pull $(containerRegistry)/$(imageRepository):91
+              #         if docker ps -a | grep spring-petclinic-app; then 
+              #         # Remove the container
+              #         docker rm -f spring-petclinic-app
+              #         docker run -d --name spring-petclinic-app $(containerRegistry)/$(imageRepository):91
               - task: Docker@2
                 displayName: Build docker from CR
                 inputs:
