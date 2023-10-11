@@ -16,31 +16,31 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
-  azureSubscription: 'Azure subscription 1(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
+  azureSubscription: 'Azure subscription 1(4)(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
 
   # Docker information
   dockerUsername: gsSpringBootCR
   dockerPassword: 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
 
 stages:
-- stage: Build
-  displayName: Build and push stage
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
+# - stage: Build
+#   displayName: Build and push stage
+#   jobs:
+#   - job: Build
+#     displayName: Build
+#     pool:
+#       vmImage: $(vmImageName)
+#     steps:
+#     - task: Docker@2
+#       displayName: Build and push an image to container registry
+#       inputs:
+#         command: buildAndPush
+#         repository: $(imageRepository)
 
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+#         dockerfile: $(dockerfilePath)
+#         containerRegistry: $(dockerRegistryServiceConnection)
+#         tags: |
+#           $(tag)
 
 - stage: Deploy
   displayName: Stage to deploy
@@ -55,25 +55,39 @@ stages:
         runOnce:
           deploy:
             steps:
-              - task: Bash@3
+              - task: DockerCompose@0
                 inputs:
-                  targetType: inline
-                  script: |           
-                    docker login -u $(dockerUsername) -p $(dockerPassword)
-                    docker pull $(containerRegistry)/springpetclinic:$(tag)
-              - task: Docker@2
-                inputs:
-                  command: login
-                  containerRegistry: $(registryName)
-              - task: Docker@2
-                displayName: Start docker container
-                inputs:
-                  command: start
-                  containerRegistry: $(registryName)
-                  container: spring-petclinic-app
-              - task: AzureWebAppContainer@1
-                displayName: Deploy to Azure Web App for Containers
-                inputs:
+                  containerregistrytype: 'Azure Container Registry'
                   azureSubscription: $(azureSubscription)
-                  appName: 'spring-petclinic'
-                  containers: '$(imageRepository):$(tag)'
+                  azureContainerRegistry: '{"loginServer":"gsspringbootcr.azurecr.io", "id" : "/subscriptions/63e6a2d7-6014-442b-8af9-f1ca1ec71b0e/resourceGroups/azure-devops-tranning-rg/providers/Microsoft.ContainerRegistry/registries/gsSpringBootCR"}'
+                  dockerComposeFile: '/docker-compose.dev.yml'
+                  action: 'Run a Docker Compose command'
+              - task: AzureRmWebAppDeployment@4
+                inputs:
+                  ConnectionType: 'AzureRM'
+                  azureSubscription: 'Azure subscription 1(4)(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
+                  appType: 'webAppContainer'
+                  WebAppName: 'spring-petclinic'
+              # - task: Bash@3
+              #   inputs:
+              #     targetType: inline
+              #     script: |           
+              #       docker login -u $(dockerUsername) -p $(dockerPassword)
+              #       docker pull $(containerRegistry)/springpetclinic:$(tag)
+              # - task: Docker@2
+              #   inputs:
+              #     command: login
+              #     containerRegistry: $(registryName)
+              # - task: Docker@2
+              #   displayName: Start docker container
+              #   inputs:
+              #     command: start
+              #     containerRegistry: $(registryName)
+              #     container: spring-petclinic-app
+              # - task: AzureRmWebAppDeployment@4
+              # - task: AzureWebAppContainer@1
+              #   displayName: Deploy to Azure Web App for Containers
+              #   inputs:
+              #     azureSubscription: $(azureSubscription)
+              #     appName: 'spring-petclinic'
+              #     containers: '$(imageRepository):$(tag)'
