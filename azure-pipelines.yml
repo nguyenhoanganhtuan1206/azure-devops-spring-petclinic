@@ -64,8 +64,7 @@ stages:
                     if docker ps -a | grep spring-petclinic-app; then
                       # Remove the container
                       docker rm -f spring-petclinic-app
-                    fi
-                    docker pull --name spring-petclinic-app $(containerRegistry)/springpetclinic:$(tag)
+                    docker pull $(containerRegistry)/springpetclinic:$(tag)
               - task: Docker@2
                 inputs:
                   command: login
