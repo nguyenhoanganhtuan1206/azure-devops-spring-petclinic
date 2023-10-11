@@ -62,15 +62,21 @@ stages:
                 inputs:
                   command: login
                   containerRegistry: $(registryName)
-              - script: |
-                  docker build -t petclinic-app .
-                  docker start petclinic-app 
-              # - task: Bash@3
-              #   inputs:
-              #     targetType: inline
-              #     script: |
-              #         docker pull $(containerRegistry)/$(imageRepository):80
-              #         docker run -d $(containerRegistry)/$(imageRepository):80
+              # - script: |
+              #     docker build -t petclinic-app .
+              #     docker start petclinic-app 
+              - task: Bash@3
+                inputs:
+                  targetType: inline
+                  script: |
+                      docker pull $(containerRegistry)/$(imageRepository):80
+                      docker run -d --name spring-petclinic-app $(containerRegistry)/$(imageRepository):80
+              - task: Docker@2
+                displayName: Start docker container
+                inputs:
+                  command: start
+                  containerRegistry: $(registryName)
+                  container: spring-petclinic-app
               - task: AzureWebAppContainer@1
                 displayName: Deploy to Azure Web App for Containers
                 inputs:
