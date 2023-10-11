@@ -23,24 +23,24 @@ variables:
   azureSubscription: 'Azure subscription 1(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
 
 stages:
-- stage: Build
-  displayName: Build and push stage
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
+# - stage: Build
+#   displayName: Build and push stage
+#   jobs:
+#   - job: Build
+#     displayName: Build
+#     pool:
+#       vmImage: $(vmImageName)
+#     steps:
+#     - task: Docker@2
+#       displayName: Build and push an image to container registry
+#       inputs:
+#         command: buildAndPush
+#         repository: $(imageRepository)
 
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+#         dockerfile: $(dockerfilePath)
+#         containerRegistry: $(dockerRegistryServiceConnection)
+#         tags: |
+#           $(tag)
 
 - stage: Deploy
   displayName: Stage to deploy
