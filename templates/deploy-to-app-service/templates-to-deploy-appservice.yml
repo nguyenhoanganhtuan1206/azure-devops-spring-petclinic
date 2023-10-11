@@ -15,21 +15,8 @@ stages:
       dockerPassword: 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
       dockerContainerName: spring-petclinic-app
     jobs:
-      - job: Build
-        displayName: Build and Push Image
-        steps:
-        - task: Docker@2
-          displayName: Build and push an image to Container Registry
-          inputs:
-            command: buildAndPush
-            repository: $(imageRepository)
-            dockerfile: $(Build.SourcesDirectory)/Dockerfile
-            containerRegistry: $(containerRegistry)
-            tags: |
-              $(tag)
       - job: Deploy
         displayName: Deploy to App Service
-        dependsOn: Build
         steps:
         - task: AzureWebAppContainer@1
           displayName: Deploy to Azure Web App for Containers
