@@ -89,3 +89,4 @@ stages:
                   azureSubscription: 'Azure subscription 1(4)(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
                   appType: 'webAppContainer'
                   WebAppName: 'spring-petclinic'
+                  DockerNamespace: '$(containerRegistry)/springpetclinic:100'
