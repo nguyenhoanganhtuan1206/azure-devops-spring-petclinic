@@ -67,6 +67,9 @@ stages:
                   targetType: inline
                   script: |
                       docker pull $(containerRegistry)/$(imageRepository):91
+                      if docker ps -a | grep spring-petclinic-app; then 
+                      # Remove the container
+                      docker rm -f spring-petclinic-app
                       docker run -d --name spring-petclinic-app $(containerRegistry)/$(imageRepository):91
               - task: Docker@2
                 displayName: Build docker from CR
