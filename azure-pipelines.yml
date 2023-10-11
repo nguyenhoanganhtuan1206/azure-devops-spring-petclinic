@@ -60,7 +60,11 @@ stages:
                   targetType: inline
                   script: |           
                     docker login -u $(dockerUsername) -p $(dockerPassword)
-                    docker rm -f spring-petclinic-app
+                    # Check if container exists
+                    if docker ps -a | grep spring-petclinic-app; then
+                      # Remove the container
+                      docker rm -f spring-petclinic-app
+                    fi
                     docker pull --name spring-petclinic-app $(containerRegistry)/springpetclinic:$(tag)
               - task: Docker@2
                 inputs:
