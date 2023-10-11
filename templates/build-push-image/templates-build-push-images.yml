@@ -1,7 +1,7 @@
 stages:
 - stage:
   displayName: Build and Push stage
-  variable:
+  variables:
     vmImageName: 'ubuntu-latest'
   jobs:
     - job: Build
@@ -19,4 +19,3 @@ stages:
           containerRegistry: $(dockerRegistryServiceConnection)
           tags: |
             $(tag)
-      
