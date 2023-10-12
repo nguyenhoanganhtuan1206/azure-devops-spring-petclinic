@@ -20,5 +20,5 @@ stages:
           displayName: Deploy to Azure Web App for Containers
           inputs:
             azureSubscription: 'Azure subscription 1(4)(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
-            appName: '$(webAppName)'
-            containers: '$(imageRepository):$(tag)'
+            appName: $(webAppName)
+            containers: $(imageRepository):$(tag)
