@@ -1,27 +1,6 @@
 resources:
 - repo: self
 
-variables:
-  # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '4d662b40-2626-4ab9-bee0-8f2a3e6dac17'
-  imageRepository: 'springpetclinic'
-  containerRegistry: 'gsspringbootcr.azurecr.io'
-  registryName: 'gsSpringBootCR'
-  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: '$(Build.BuildId)'
-
-  # Agent VM image name
-  vmImageName: 'ubuntu-latest'
-
-  webAppName: spring-petclinic
-
-  azureSubscription: 'Azure subscription 1(4)(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
-
-  # Docker information
-  dockerUsername: gsSpringBootCR
-  dockerPassword: 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
-  dockerContainerName: spring-petclinic-app
-
 stages:
 - template: templates/build-push-image/templates-build-push-images.yml
 
