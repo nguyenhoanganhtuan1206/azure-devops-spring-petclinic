@@ -21,6 +21,6 @@ stages:
         - task: AzureWebAppContainer@1
           displayName: Deploy to Azure Web App for Containers
           inputs:
-            azureSubscription: $(azureSubscription)
-            appName: $(webAppName)
+            azureSubscription: '$(azureSubscription)'
+            appName: '$(webAppName)'
             containers: '$(imageRepository):$(tag)'
