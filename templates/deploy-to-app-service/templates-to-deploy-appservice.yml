@@ -8,6 +8,8 @@ stages:
       registryName: 'gsSpringBootCR'
       tag: '$(Build.BuildId)'
 
+      webAppName: 'spring-petclinic'
+
       # Docker information
       dockerUsername: gsSpringBootCR
       dockerPassword: 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
