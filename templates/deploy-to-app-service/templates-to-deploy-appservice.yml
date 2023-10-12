@@ -8,8 +8,6 @@ stages:
       registryName: 'gsSpringBootCR'
       tag: '$(Build.BuildId)'
 
-      azureSubscription: 'Azure subscription 1(4)(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
-
       # Docker information
       dockerUsername: gsSpringBootCR
       dockerPassword: 9Sb9L4www+ZPz9bdLEQpmO436X2tQ6TQJJXvvVHFG4+ACRCMHdtQ gsspringbootcr.azurecr.io
@@ -21,6 +19,6 @@ stages:
         - task: AzureWebAppContainer@1
           displayName: Deploy to Azure Web App for Containers
           inputs:
-            azureSubscription: '$(azureSubscription)'
+            azureSubscription: 'Azure subscription 1(4)(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
             appName: '$(webAppName)'
             containers: '$(imageRepository):$(tag)'
