@@ -5,6 +5,8 @@ stages:
     vmImageName: 'ubuntu-latest'
 
     dockerRegistryServiceConnection: '4d662b40-2626-4ab9-bee0-8f2a3e6dac17'
+    dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+
   jobs:
     - job: Build
       pool:
@@ -18,6 +20,6 @@ stages:
           repository: $(imageRepository)
 
           dockerfile: $(dockerfilePath)
-          containerRegistry: $(dockerRegistryServiceConnection)
+          containerRegistry: gsSpringBootCR
           tags: |
             $(tag)
