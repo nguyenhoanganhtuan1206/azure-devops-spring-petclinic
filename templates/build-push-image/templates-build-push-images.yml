@@ -18,8 +18,7 @@ stages:
         inputs:
           command: buildAndPush
           repository: $(imageRepository)
-
           dockerfile: $(dockerfilePath)
-          containerRegistry: gsSpringBootCR
+          containerRegistry: springpetclinicCR
           tags: |
             $(tag)
