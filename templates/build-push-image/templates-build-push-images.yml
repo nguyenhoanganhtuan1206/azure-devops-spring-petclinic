@@ -3,6 +3,8 @@ stages:
   displayName: Build and Push stage
   variables:
     vmImageName: 'ubuntu-latest'
+
+    dockerRegistryServiceConnection: '4d662b40-2626-4ab9-bee0-8f2a3e6dac17'
   jobs:
     - job: Build
       pool:
