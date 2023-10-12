@@ -11,7 +11,7 @@ stages:
       webAppName: 'spring-petclinic'
 
       # Docker information
-      dockerUsername: springpetcliniccr.azurecr.io
+      dockerUsername: springpetclinicCR
       dockerPassword: 6RxVIkb29Mpeo9xpPlHvpPdFxZovRHFZWOQH+SISun+ACRCdfupt
       dockerContainerName: spring-petclinic-app
     jobs:
@@ -21,6 +21,6 @@ stages:
         - task: AzureWebAppContainer@1
           displayName: Deploy to Azure Web App for Containers
           inputs:
-            azureSubscription: 'Azure subscription 1(4)(63e6a2d7-6014-442b-8af9-f1ca1ec71b0e)'
+            azureSubscription: '63e6a2d7-6014-442b-8af9-f1ca1ec71b0e'
             appName: $(webAppName)
             containers: $(imageRepository):$(tag)
