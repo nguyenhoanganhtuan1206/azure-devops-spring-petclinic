@@ -17,6 +17,7 @@ stages:
         displayName: Build and Push an image to CR
         inputs:
           command: buildAndPush
+          azureSubscription: gsSpringBootCR-2896
           repository: $(imageRepository)
           dockerfile: $(dockerfilePath)
           tags: |
